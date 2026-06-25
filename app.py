@@ -86,12 +86,12 @@ def logout():
     
 menu = st.sidebar.radio(
     "📂 Navegação",
-    ["Home", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
+    ["sobre mim", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
 logout()
 
-if menu == "Home":
+if menu == "sobre mim":
     st.title("Portifólio")
     st.write("Matheus Saraiva")
     st.markdown("""
