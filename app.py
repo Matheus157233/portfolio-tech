@@ -138,6 +138,25 @@ elif menu == "Data Byte":
     st.title("🧠 Data Byte")
     st.write("Plataforma educacional de dados")
     st.markdown("""
+# 🚀 Live Project
+
+🔗 **Acesse a aplicação em produção:**  
+👉 https://data-byte-projeto-do-ano.streamlit.app
+
+---
+
+## 📊 Data Byte
+
+Este projeto foi desenvolvido como uma plataforma interativa de **Ciência de Dados**, com foco em:
+
+- Dashboards analíticos
+- Visualização de dados
+- Experiência educacional prática
+- Interface estilo SaaS
+
+💡 Projeto publicado em ambiente cloud para acesso público e demonstração profissional.
+""")
+    st.markdown("""
     
 
 ## 📌 Visão Geral
