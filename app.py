@@ -94,13 +94,51 @@ logout()
 if menu == "Home":
     st.title("Portifólio")
     st.write("De Matheus Santos Saraiva")
+    st.markdown("""
+
+# 👋 Sobre Mim
+
+Olá! Meu nome é **[Seu Nome]** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
+
+Atualmente curso o Técnico em Ciência de Dados no Senac Nações Unidas, onde desenvolvo projetos voltados para análise, visualização e interpretação de dados, utilizando ferramentas modernas do mercado.
+
+Tenho interesse especial em transformar dados em informações úteis para apoiar tomadas de decisão. Ao longo da minha formação, venho desenvolvendo dashboards interativos, aplicações web com Python e projetos que unem tecnologia, negócios e análise de dados.
+
+Neste portfólio apresento alguns dos trabalhos que desenvolvi, incluindo dashboards analíticos, estudos de dados e o projeto **Data Byte**, uma plataforma educacional criada para tornar o aprendizado de Ciência de Dados mais acessível e interativo.
+
+---
+
+## 🚀 Principais Competências
+
+* Python
+* Ciência de Dados
+* Análise de Dados
+* Streamlit
+* Pandas
+* NumPy
+* Plotly
+* SQL
+* Git e GitHub
+* Visualização de Dados
+* Desenvolvimento de Dashboards
+
+---
+
+## 🎯 Objetivos
+
+Meu objetivo é construir uma carreira sólida na área de tecnologia, aprofundando meus conhecimentos em Ciência de Dados, Inteligência Artificial e Engenharia de Software.
+
+Busco constantemente aprender novas tecnologias, desenvolver projetos cada vez mais completos e aplicar o conhecimento adquirido para resolver problemas reais através dos dados.
+
+Obrigado por visitar meu portfólio!
+""")
+
 
 elif menu == "Data Byte":
     st.title("🧠 Data Byte")
     st.write("Plataforma educacional de dados")
     st.markdown("""
-
-# 🧠 Data Byte
+    
 
 ## 📌 Visão Geral
 
