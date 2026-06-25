@@ -98,7 +98,7 @@ if menu == "Home":
 
 # 👋 Sobre Mim
 
-Olá! Meu nome é **Matheus Saraiva]** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
+Olá! Meu nome é **Matheus Saraiva** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
 
 Atualmente curso o Técnico em Ciência de Dados no Senac Nações Unidas, onde desenvolvo projetos voltados para análise, visualização e interpretação de dados, utilizando ferramentas modernas do mercado.
 
