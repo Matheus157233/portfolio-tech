@@ -6,75 +6,123 @@ st.set_page_config(
     layout="wide"
 )
 
-# MENU LATERAL (MÓDULOS)
+# ===== CSS PERSONALIZADO (visual SaaS) =====
+st.markdown("""
+<style>
+    .main-title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        color: #666;
+        margin-top: 0px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #111827;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .small-text {
+        color: #9ca3af;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ===== SIDEBAR =====
 menu = st.sidebar.selectbox(
-    "📂 Navegação",
+    "📂 Menu",
     ["Home", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
 # =========================
-# HOME
+# HOME (STARTUP STYLE)
 # =========================
 if menu == "Home":
-    st.title("📊 Meu Portfólio de Dados")
-    st.subheader("Projetos em Ciência de Dados com Python")
 
-    st.write("""
-    Bem-vindo ao meu portfólio.
+    st.markdown('<p class="main-title">📊 Data Portfolio</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">Transformando dados em decisões de negócio</p>', unsafe_allow_html=True)
 
-    Aqui você encontra projetos de:
-    - Análise de dados
-    - Dashboards interativos
-    - Visualização de dados
-    """)
+    st.divider()
 
-    st.success("Selecione um projeto na barra lateral 👈")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div class="card">
+        <h3>🧠 Data Byte</h3>
+        <p class="small-text">Plataforma educacional de dados</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="card">
+        <h3>📈 Vendas</h3>
+        <p class="small-text">Dashboard comercial</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="card">
+        <h3>💰 Financeiro</h3>
+        <p class="small-text">Controle financeiro</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.divider()
+
+    st.success("Selecione um projeto no menu lateral 👈")
 
 
 # =========================
 # DATA BYTE
 # =========================
 elif menu == "Data Byte":
+
     st.title("🧠 Data Byte")
-    st.subheader("Plataforma educacional de Ciência de Dados")
+
+    st.write("Plataforma educacional interativa de Ciência de Dados.")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.header("📌 Sobre")
-        st.write("""
-        Plataforma criada para ensino prático de Ciência de Dados com Python e Streamlit.
-        """)
+        st.info("📌 Projeto focado em aprendizado visual")
 
     with col2:
-        st.header("⚙️ Tecnologias")
-        st.write("- Python\n- Streamlit\n- Pandas\n- Plotly")
+        st.success("⚙️ Python + Streamlit + Pandas")
 
     st.divider()
 
-    st.header("🎯 Problema")
-    st.write("Ensinar Ciência de Dados de forma visual e prática.")
+    st.markdown("### 🎯 Problema")
+    st.write("Ensinar ciência de dados de forma simples e prática.")
 
-    st.info("Aqui você pode adicionar prints do projeto depois")
+    st.markdown("### 🚧 Status")
+    st.warning("Em evolução contínua")
 
 
 # =========================
-# DASHBOARD VENDAS
+# VENDAS
 # =========================
 elif menu == "Dashboard de Vendas":
+
     st.title("📈 Dashboard de Vendas")
 
-    st.write("Projeto ainda em construção...")
-
-    st.info("Aqui vamos colocar KPIs, gráficos e insights reais")
+    st.info("Projeto em construção — próximo nível será com gráficos reais")
 
 
 # =========================
-# DASHBOARD FINANCEIRO
+# FINANCEIRO
 # =========================
 elif menu == "Dashboard Financeiro":
-    st.title("💰 Dashboard Financeiro")
 
-    st.write("Projeto ainda em construção...")
+    st.title("💰 Dashboard Financeiro")
 
     st.info("Controle de receitas, despesas e lucro")
