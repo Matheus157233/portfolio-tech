@@ -6,39 +6,75 @@ st.set_page_config(
     layout="wide"
 )
 
-# Título
-st.title("📊 Meu Portfólio de Dados")
-st.subheader("Transformando dados em insights e decisões")
+# MENU LATERAL (MÓDULOS)
+menu = st.sidebar.selectbox(
+    "📂 Navegação",
+    ["Home", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
+)
 
-st.divider()
+# =========================
+# HOME
+# =========================
+if menu == "Home":
+    st.title("📊 Meu Portfólio de Dados")
+    st.subheader("Projetos em Ciência de Dados com Python")
 
-# Sobre você
-st.header("👨‍💻 Sobre mim")
-st.write("""
-Sou estudante de Ciência de Dados com foco em análise, visualização e criação de dashboards com Python e Streamlit.
-Tenho projetos aplicados em dados reais e simulados, com foco em resolver problemas de negócio.
-""")
+    st.write("""
+    Bem-vindo ao meu portfólio.
 
-st.divider()
+    Aqui você encontra projetos de:
+    - Análise de dados
+    - Dashboards interativos
+    - Visualização de dados
+    """)
 
-# Projetos
-st.header("📁 Projetos")
+    st.success("Selecione um projeto na barra lateral 👈")
 
-st.subheader("🧠 Data Byte")
-st.write("Plataforma educacional interativa de Ciência de Dados.")
-st.write("Tecnologias: Python, Streamlit, Pandas")
 
-st.subheader("📊 Dashboard de Vendas")
-st.write("Análise de vendas com KPIs, gráficos e insights de negócio.")
+# =========================
+# DATA BYTE
+# =========================
+elif menu == "Data Byte":
+    st.title("🧠 Data Byte")
+    st.subheader("Plataforma educacional de Ciência de Dados")
 
-st.subheader("💰 Dashboard Financeiro")
-st.write("Controle financeiro com receitas, despesas e lucro.")
+    col1, col2 = st.columns(2)
 
-st.divider()
+    with col1:
+        st.header("📌 Sobre")
+        st.write("""
+        Plataforma criada para ensino prático de Ciência de Dados com Python e Streamlit.
+        """)
 
-# Contato
-st.write("📞 11 941563832")
-st.write("GitHub: Matheus157233")
-st.write("LinkedIn: www.linkedin.com/in/matheus-santos-43abba289")
+    with col2:
+        st.header("⚙️ Tecnologias")
+        st.write("- Python\n- Streamlit\n- Pandas\n- Plotly")
 
-st.success("Portfólio em construção 🚧")
+    st.divider()
+
+    st.header("🎯 Problema")
+    st.write("Ensinar Ciência de Dados de forma visual e prática.")
+
+    st.info("Aqui você pode adicionar prints do projeto depois")
+
+
+# =========================
+# DASHBOARD VENDAS
+# =========================
+elif menu == "Dashboard de Vendas":
+    st.title("📈 Dashboard de Vendas")
+
+    st.write("Projeto ainda em construção...")
+
+    st.info("Aqui vamos colocar KPIs, gráficos e insights reais")
+
+
+# =========================
+# DASHBOARD FINANCEIRO
+# =========================
+elif menu == "Dashboard Financeiro":
+    st.title("💰 Dashboard Financeiro")
+
+    st.write("Projeto ainda em construção...")
+
+    st.info("Controle de receitas, despesas e lucro")
