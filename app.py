@@ -87,26 +87,28 @@ if menu == "Home":
 # =========================
 elif menu == "Data Byte":
 
-    st.title("🧠 Data Byte")
+st.title("🧠 Data Byte")
 
-    st.write("Plataforma educacional interativa de Ciência de Dados.")
+st.write("Plataforma interativa de aprendizado em Ciência de Dados")
 
-    col1, col2 = st.columns(2)
+st.divider()
 
-    with col1:
-        st.info("📌 Projeto focado em aprendizado visual")
+st.subheader("📌 O que você aprende aqui")
 
-    with col2:
-        st.success("⚙️ Python + Streamlit + Pandas")
+st.markdown("""
+- Análise de dados na prática  
+- Visualização com Python  
+- Interpretação de dados reais  
+- Construção de dashboards  
+""")
 
-    st.divider()
+st.divider()
 
-    st.markdown("### 🎯 Problema")
-    st.write("Ensinar ciência de dados de forma simples e prática.")
+st.subheader("📊 Exemplo de aplicação")
 
-    st.markdown("### 🚧 Status")
-    st.warning("Em evolução contínua")
+st.info("Aqui você pode integrar notebooks, gráficos ou mini dashboards")
 
+st.success("Projeto focado em aprendizado prático e visual")
 
 # =========================
 # VENDAS
