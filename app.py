@@ -37,8 +37,8 @@ st.write("Controle financeiro com receitas, despesas e lucro.")
 st.divider()
 
 # Contato
-st.header("📞 Contato")
-st.write("GitHub: seuusuario")
-st.write("LinkedIn: seu-link-aqui")
+st.header("📞 11 941563832")
+st.write("GitHub: Matheus157233")
+st.write("LinkedIn: www.linkedin.com/in/matheus-santos-43abba289")
 
 st.success("Portfólio em construção 🚧")
