@@ -16,12 +16,16 @@ def hash_password(password):
 
 def register_user(email, password):
     try:
-        supabase.table("users").insert({
+        result = supabase.table("users").insert({
             "email": email,
             "password": hash_password(password)
         }).execute()
+
+        st.write(result)
         return True
-    except:
+
+    except Exception as e:
+        st.error(f"Erro: {e}")
         return False
 
 def login_user(email, password):
