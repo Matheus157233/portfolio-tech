@@ -35,6 +35,9 @@ def login_user(email, password):
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
+    
+if "user" not in st.session_state:
+    st.session_state.user = None
 
 def auth_page():
     st.title("🔐 Data Portfolio SaaS")
@@ -52,7 +55,7 @@ def auth_page():
                 st.rerun()
             else:
                 st.error("Login inválido")
-
+                
     with tab2:
         new_email = st.text_input("Novo email")
         new_password = st.text_input("Nova senha", type="password")
@@ -64,12 +67,19 @@ def auth_page():
                 st.error("Erro ao criar conta")
 
 def logout():
-    st.sidebar.write(f"👤 {st.session_state.user}")
+
+    if st.session_state.user:
+        st.sidebar.write(f"👤 {st.session_state.user}")
 
     if st.sidebar.button("Sair"):
         st.session_state.logged_in = False
+        st.session_state.user = None
         st.rerun()
 
+    if not st.session_state.logged_in:
+        auth_page()
+        st.stop()
+    
 menu = st.sidebar.radio(
     "📂 Navegação",
     ["Home", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
