@@ -92,12 +92,82 @@ menu = st.sidebar.radio(
 logout()
 
 if menu == "Home":
-    st.title("📊 Data Portfolio SaaS")
-    st.write("Sistema de análise de dados estilo startup")
+    st.title("Portifólio")
+    st.write("De Matheus Santos Saraiva")
 
 elif menu == "Data Byte":
     st.title("🧠 Data Byte")
     st.write("Plataforma educacional de dados")
+   st.markdown("""
+
+# 🧠 Data Byte
+
+## 📌 Visão Geral
+
+O **Data Byte** é uma plataforma interativa desenvolvida com o objetivo de tornar o aprendizado de Ciência de Dados mais acessível, visual e prático.
+
+O projeto foi criado para reunir conceitos fundamentais da área em um ambiente intuitivo, permitindo que usuários explorem conteúdos, análises e visualizações de dados de forma dinâmica.
+
+A proposta surgiu da percepção de que muitos estudantes encontram dificuldades para conectar teoria e prática. Dessa forma, o Data Byte busca reduzir essa distância por meio de dashboards interativos, exemplos práticos e exploração de dados.
+
+---
+
+## 🚀 Como o Projeto Foi Desenvolvido
+
+O desenvolvimento foi realizado utilizando **Python** como tecnologia principal, aproveitando seu amplo ecossistema voltado para análise de dados e desenvolvimento de aplicações.
+
+A interface foi construída com **Streamlit**, permitindo criar uma experiência web moderna e interativa. Para manipulação e tratamento dos dados foi utilizada a biblioteca **Pandas**, enquanto **NumPy** auxiliou em cálculos e simulações.
+
+As visualizações foram desenvolvidas com **Plotly**, proporcionando gráficos dinâmicos e interativos para melhor interpretação das informações.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* Python
+* Streamlit
+* Pandas
+* NumPy
+* Plotly
+* Git
+* GitHub
+* Streamlit Cloud
+
+---
+
+## 📊 Funcionalidades
+
+✅ Interface web interativa
+
+✅ Visualização de dados em tempo real
+
+✅ Gráficos dinâmicos e intuitivos
+
+✅ Demonstrações práticas de Ciência de Dados
+
+✅ Estrutura escalável para novos módulos
+
+---
+
+## 🎯 Aprendizados Obtidos
+
+Durante o desenvolvimento do Data Byte foram aplicados conhecimentos de:
+
+* Programação em Python
+* Ciência de Dados
+* Visualização de Dados
+* Desenvolvimento Web
+* Versionamento com Git
+* Deploy de aplicações em nuvem
+
+---
+
+## 💡 Conclusão
+
+O Data Byte representa a união entre educação e tecnologia, demonstrando como ferramentas modernas de Ciência de Dados podem ser utilizadas para criar experiências de aprendizado mais envolventes e eficazes.
+
+Além de servir como plataforma educacional, o projeto evidencia competências em desenvolvimento de software, análise de dados e construção de dashboards interativos.
+""")
 
 elif menu == "Dashboard de Vendas":
 
