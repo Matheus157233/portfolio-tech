@@ -1,162 +1,143 @@
-import streamlit as st
-import pandas as pd
 import numpy as np
+import pandas as pd
+import streamlit as st
 import plotly.express as px
+from sklearn.linear_model import LinearRegression
 
-st.set_page_config(
-    page_title="Data Portfolio",
-    page_icon="📊",
-    layout="wide"
+# =========================
+# TÍTULO
+# =========================
+st.title("📊 Dashboard de Vendas - Premium")
+
+# =========================
+# DADOS SIMULADOS REALISTAS
+# =========================
+np.random.seed(42)
+
+dias = pd.date_range(start="2025-01-01", periods=180)
+
+df = pd.DataFrame({
+    "data": dias,
+    "produto": np.random.choice(["Notebook", "Mouse", "Teclado", "Monitor", "Headset"], len(dias)),
+    "categoria": np.random.choice(["Hardware", "Acessórios", "Periféricos"], len(dias)),
+    "quantidade": np.random.randint(1, 20, len(dias)),
+    "preco": np.random.randint(50, 5000, len(dias))
+})
+
+df["receita"] = df["quantidade"] * df["preco"]
+
+# =========================
+# KPIs
+# =========================
+col1, col2, col3 = st.columns(3)
+
+col1.metric("💰 Receita Total", f"R$ {df['receita'].sum():,.0f}")
+col2.metric("📦 Total Vendas", df["quantidade"].sum())
+col3.metric("🎯 Ticket Médio", f"R$ {df['receita'].mean():,.2f}")
+
+st.divider()
+
+# =========================
+# GRÁFICO 1 - EVOLUÇÃO
+# =========================
+st.subheader("📈 Evolução da Receita")
+
+df_line = df.groupby("data")["receita"].sum().reset_index()
+
+fig_line = px.line(
+    df_line,
+    x="data",
+    y="receita",
+    title="Receita ao longo do tempo"
 )
 
+st.plotly_chart(fig_line, use_container_width=True)
+
 # =========================
-# MENU PRINCIPAL (ABAS)
+# GRÁFICO 2 - PIZZA CATEGORIA
 # =========================
-menu = st.sidebar.radio(
-    "📂 Navegação",
-    ["👤 Quem sou eu", "📁 Trabalhos feitos", "🧠 Data Byte", "📊 Dashboard de Vendas", "💰 Dashboard Financeiro"]
+st.subheader("🍕 Receita por Categoria")
+
+df_cat = df.groupby("categoria")["receita"].sum().reset_index()
+
+fig_pie_cat = px.pie(
+    df_cat,
+    names="categoria",
+    values="receita",
+    title="Distribuição por Categoria"
 )
 
-# =========================
-# 👤 QUEM SOU EU
-# =========================
-if menu == "👤 Quem sou eu":
-
-    st.title("👨‍💻 Sobre mim")
-
-    st.write("""
-    Sou estudante e desenvolvedor focado em Ciência de Dados.
-
-    Trabalho com:
-    - Análise de dados
-    - Criação de dashboards
-    - Visualização de dados
-    - Python e Streamlit
-    """)
-
-    st.divider()
-
-    st.subheader("⚙️ Tecnologias")
-    st.write("Python | Pandas | NumPy | Plotly | Streamlit")
-
-    st.success("Foco: transformar dados em decisões reais de negócio")
-
+st.plotly_chart(fig_pie_cat, use_container_width=True)
 
 # =========================
-# 📁 TRABALHOS FEITOS
+# GRÁFICO 3 - PIZZA PRODUTO
 # =========================
-elif menu == "📁 Trabalhos feitos":
+st.subheader("🍕 Receita por Produto")
 
-    st.title("📁 Meus Projetos")
+df_prod = df.groupby("produto")["receita"].sum().reset_index()
 
-    st.subheader("🧠 Data Byte")
-    st.write("Plataforma educacional de Ciência de Dados.")
-    st.write("🔗 Aqui você vai colocar o link do Streamlit Cloud")
-    st.write("📸 Aqui você pode adicionar prints do projeto")
+fig_pie_prod = px.pie(
+    df_prod,
+    names="produto",
+    values="receita",
+    title="Distribuição por Produto"
+)
 
-    st.markdown("---")
-
-    st.subheader("📊 Dashboard de Vendas")
-    st.write("Análise de vendas com KPIs e gráficos interativos.")
-    st.write("Tecnologias: Python, Pandas, Plotly, Streamlit")
-
-    st.markdown("---")
-
-    st.subheader("💰 Dashboard Financeiro")
-    st.write("Controle financeiro com análise de receitas e despesas.")
-    st.write("Tecnologias: Python, Pandas, Plotly, Streamlit")
-
+st.plotly_chart(fig_pie_prod, use_container_width=True)
 
 # =========================
-# 🧠 DATA BYTE
+# PREVISÃO SIMPLES (ML)
 # =========================
-elif menu == "🧠 Data Byte":
+st.subheader("🔮 Previsão de Receita")
 
-    st.title("🧠 Data Byte")
+df_model = df.groupby("data")["receita"].sum().reset_index()
+df_model["dia"] = np.arange(len(df_model))
 
-    st.write("""
-    Plataforma interativa de aprendizado em Ciência de Dados.
+X = df_model[["dia"]]
+y = df_model["receita"]
 
-    👉 Projeto focado em transformar teoria em prática visual.
-    """)
+model = LinearRegression()
+model.fit(X, y)
 
-    st.info("🔗 Adicione aqui o link do seu projeto no Streamlit Cloud")
+# prever próximos 30 dias
+future_days = np.arange(len(df_model), len(df_model) + 30).reshape(-1, 1)
+future_pred = model.predict(future_days)
 
-    st.success("📸 Espaço para prints do sistema")
+df_future = pd.DataFrame({
+    "dia": future_days.flatten(),
+    "previsao": future_pred
+})
 
-    st.write("Tecnologias usadas: Python, Streamlit, Pandas")
+fig_pred = px.line()
 
+fig_pred.add_scatter(
+    x=df_model["dia"],
+    y=df_model["receita"],
+    mode="lines",
+    name="Histórico"
+)
 
-# =========================
-# 📊 DASHBOARD DE VENDAS (REAL)
-# =========================
-elif menu == "📊 Dashboard de Vendas":
+fig_pred.add_scatter(
+    x=df_future["dia"],
+    y=df_future["previsao"],
+    mode="lines",
+    name="Previsão"
+)
 
-    st.title("📊 Dashboard de Vendas")
-
-    # ===== DADOS SIMULADOS REALISTAS =====
-    np.random.seed(42)
-
-    df = pd.DataFrame({
-        "data": pd.date_range(start="2025-01-01", periods=150),
-        "produto": np.random.choice(["Notebook", "Mouse", "Teclado", "Monitor", "Headset"], 150),
-        "categoria": np.random.choice(["Hardware", "Acessórios"], 150),
-        "vendas": np.random.randint(1, 15, 150),
-        "preco_unit": np.random.randint(50, 4000, 150)
-    })
-
-    df["receita"] = df["vendas"] * df["preco_unit"]
-
-    # ===== KPIs =====
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("💰 Receita Total", f"R$ {df['receita'].sum():,.0f}")
-    col2.metric("📦 Vendas Totais", df["vendas"].sum())
-    col3.metric("🎯 Ticket Médio", f"R$ {df['receita'].mean():,.2f}")
-
-    st.divider()
-
-    # ===== GRÁFICO 1 =====
-    st.subheader("📈 Receita ao longo do tempo")
-
-    fig1 = px.line(df, x="data", y="receita", title="Evolução da Receita")
-    st.plotly_chart(fig1, use_container_width=True)
-
-    # ===== GRÁFICO 2 =====
-    st.subheader("📊 Receita por Produto")
-
-    prod = df.groupby("produto")["receita"].sum().reset_index()
-
-    fig2 = px.bar(prod, x="produto", y="receita", title="Produtos mais lucrativos")
-    st.plotly_chart(fig2, use_container_width=True)
-
-    # ===== INSIGHTS =====
-    st.subheader("🧠 Insights automáticos")
-
-    top_produto = prod.sort_values("receita", ascending=False).iloc[0]
-
-    st.success(f"""
-    📌 Produto mais lucrativo: {top_produto['produto']}  
-    💰 Receita gerada: R$ {top_produto['receita']:,.0f}
-    """)
-
+st.plotly_chart(fig_pred, use_container_width=True)
 
 # =========================
-# 💰 DASHBOARD FINANCEIRO (BASE)
+# INSIGHTS AUTOMÁTICOS
 # =========================
-elif menu == "💰 Dashboard Financeiro":
+st.subheader("🧠 Insights Automáticos")
 
-    st.title("💰 Dashboard Financeiro")
+top_prod = df_prod.sort_values("receita", ascending=False).iloc[0]
+top_cat = df_cat.sort_values("receita", ascending=False).iloc[0]
 
-    df = pd.DataFrame({
-        "mes": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"],
-        "receita": [5000, 7000, 6500, 8000, 9000, 11000],
-        "despesa": [3000, 3500, 4000, 4200, 5000, 6000]
-    })
+st.success(f"""
+📌 Produto mais forte: {top_prod['produto']}  
+📌 Categoria dominante: {top_cat['categoria']}  
+💰 Maior impacto vem da categoria com maior receita.
+""")
 
-    df["lucro"] = df["receita"] - df["despesa"]
-
-    fig = px.bar(df, x="mes", y=["receita", "despesa"], barmode="group")
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.line_chart(df.set_index("mes")["lucro"])
+st.info("Modelo de previsão simples baseado em regressão linear (baseline).")
