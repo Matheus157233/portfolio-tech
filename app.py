@@ -93,12 +93,12 @@ logout()
 
 if menu == "Home":
     st.title("Portifólio")
-    st.write("De Matheus Santos Saraiva")
+    st.write("Matheus Saraiva")
     st.markdown("""
 
 # 👋 Sobre Mim
 
-Olá! Meu nome é **[Seu Nome]** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
+Olá! Meu nome é **Matheus Saraiva]** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
 
 Atualmente curso o Técnico em Ciência de Dados no Senac Nações Unidas, onde desenvolvo projetos voltados para análise, visualização e interpretação de dados, utilizando ferramentas modernas do mercado.
 
