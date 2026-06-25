@@ -133,6 +133,32 @@ Busco constantemente aprender novas tecnologias, desenvolver projetos cada vez m
 Obrigado por visitar meu portfólio!
 """)
 
+    st.markdown("""
+# 📜 Certificações & Formação
+
+## 🎓 Formação Principal/Certificados
+- Técnico em Ciência de Dados — Senac Nações Unidas
+- introdução a cybersecurity - Cisco
+- Crie um site simples usando html, Css e javascript - Fundação Bradesco
+- Administrando Banco de dados - Fundação Bradesco
+
+---
+
+## 📚 Cursos Complementares
+
+- Python para Análise de Dados  
+- Introdução à Ciência de Dados  
+- SQL e Banco de Dados  
+- Visualização de Dados com Python  
+
+---
+
+## 💡 Observação
+
+Essas formações foram aplicadas diretamente em projetos práticos, incluindo dashboards interativos e o desenvolvimento da plataforma **Data Byte**.
+
+""")
+
 
 elif menu == "Data Byte":
     st.title("🧠 Data Byte")
