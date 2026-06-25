@@ -98,7 +98,7 @@ if menu == "Home":
 elif menu == "Data Byte":
     st.title("🧠 Data Byte")
     st.write("Plataforma educacional de dados")
-   st.markdown("""
+    st.markdown("""
 
 # 🧠 Data Byte
 
