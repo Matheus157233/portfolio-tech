@@ -1,143 +1,141 @@
-import numpy as np
-import pandas as pd
 import streamlit as st
+import pandas as pd
+import numpy as np
 import plotly.express as px
 from sklearn.linear_model import LinearRegression
+import hashlib
+from supabase import create_client
 
-# =========================
-# TÍTULO
-# =========================
-st.title("📊 Dashboard de Vendas - Premium")
+SUPABASE_URL = "sb_secret_-p8c9Tump6H-6CtLE3YgAA_uOhpBhpT"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF6ZWd2eGZzeXhrbGV6YnhoeGJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjQxNTE1OCwiZXhwIjoyMDk3OTkxMTU4fQ.jIHrymCIumRyJvY7FPiby5Dd5h3MCDRTbNF7oY_2Zdo"
 
-# =========================
-# DADOS SIMULADOS REALISTAS
-# =========================
-np.random.seed(42)
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-dias = pd.date_range(start="2025-01-01", periods=180)
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
-df = pd.DataFrame({
-    "data": dias,
-    "produto": np.random.choice(["Notebook", "Mouse", "Teclado", "Monitor", "Headset"], len(dias)),
-    "categoria": np.random.choice(["Hardware", "Acessórios", "Periféricos"], len(dias)),
-    "quantidade": np.random.randint(1, 20, len(dias)),
-    "preco": np.random.randint(50, 5000, len(dias))
-})
+def register_user(email, password):
+    try:
+        supabase.table("users").insert({
+            "email": email,
+            "password": hash_password(password)
+        }).execute()
+        return True
+    except:
+        return False
 
-df["receita"] = df["quantidade"] * df["preco"]
+def login_user(email, password):
+    res = supabase.table("users") \
+        .select("*") \
+        .eq("email", email) \
+        .eq("password", hash_password(password)) \
+        .execute()
 
-# =========================
-# KPIs
-# =========================
-col1, col2, col3 = st.columns(3)
+    return len(res.data) > 0
 
-col1.metric("💰 Receita Total", f"R$ {df['receita'].sum():,.0f}")
-col2.metric("📦 Total Vendas", df["quantidade"].sum())
-col3.metric("🎯 Ticket Médio", f"R$ {df['receita'].mean():,.2f}")
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
 
-st.divider()
+def auth_page():
+    st.title("🔐 Data Portfolio SaaS")
 
-# =========================
-# GRÁFICO 1 - EVOLUÇÃO
-# =========================
-st.subheader("📈 Evolução da Receita")
+    tab1, tab2 = st.tabs(["Login", "Cadastro"])
 
-df_line = df.groupby("data")["receita"].sum().reset_index()
+    with tab1:
+        email = st.text_input("Email")
+        password = st.text_input("Senha", type="password")
 
-fig_line = px.line(
-    df_line,
-    x="data",
-    y="receita",
-    title="Receita ao longo do tempo"
+        if st.button("Entrar"):
+            if login_user(email, password):
+                st.session_state.logged_in = True
+                st.session_state.user = email
+                st.rerun()
+            else:
+                st.error("Login inválido")
+
+    with tab2:
+        new_email = st.text_input("Novo email")
+        new_password = st.text_input("Nova senha", type="password")
+
+        if st.button("Criar conta"):
+            if register_user(new_email, new_password):
+                st.success("Conta criada!")
+            else:
+                st.error("Erro ao criar conta")
+
+def logout():
+    st.sidebar.write(f"👤 {st.session_state.user}")
+
+    if st.sidebar.button("Sair"):
+        st.session_state.logged_in = False
+        st.rerun()
+
+menu = st.sidebar.radio(
+    "📂 Navegação",
+    ["Home", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
-st.plotly_chart(fig_line, use_container_width=True)
+logout()
 
-# =========================
-# GRÁFICO 2 - PIZZA CATEGORIA
-# =========================
-st.subheader("🍕 Receita por Categoria")
+if menu == "Home":
+    st.title("📊 Data Portfolio SaaS")
+    st.write("Sistema de análise de dados estilo startup")
 
-df_cat = df.groupby("categoria")["receita"].sum().reset_index()
+elif menu == "Data Byte":
+    st.title("🧠 Data Byte")
+    st.write("Plataforma educacional de dados")
 
-fig_pie_cat = px.pie(
-    df_cat,
-    names="categoria",
-    values="receita",
-    title="Distribuição por Categoria"
-)
+elif menu == "Dashboard de Vendas":
 
-st.plotly_chart(fig_pie_cat, use_container_width=True)
+    st.title("📊 Sales Dashboard")
 
-# =========================
-# GRÁFICO 3 - PIZZA PRODUTO
-# =========================
-st.subheader("🍕 Receita por Produto")
+    np.random.seed(42)
 
-df_prod = df.groupby("produto")["receita"].sum().reset_index()
+    df = pd.DataFrame({
+        "data": pd.date_range("2025-01-01", periods=200),
+        "produto": np.random.choice(["Notebook", "Mouse", "Teclado"], 200),
+        "categoria": np.random.choice(["Hardware", "Acessórios"], 200),
+        "qtd": np.random.randint(1, 10, 200),
+        "preco": np.random.randint(100, 3000, 200)
+    })
 
-fig_pie_prod = px.pie(
-    df_prod,
-    names="produto",
-    values="receita",
-    title="Distribuição por Produto"
-)
+    df["receita"] = df["qtd"] * df["preco"]
 
-st.plotly_chart(fig_pie_prod, use_container_width=True)
+    st.metric("Receita", f"R$ {df['receita'].sum():,.0f}")
 
-# =========================
-# PREVISÃO SIMPLES (ML)
-# =========================
-st.subheader("🔮 Previsão de Receita")
+    # pizza categoria
+    cat = df.groupby("categoria")["receita"].sum().reset_index()
+    fig1 = px.pie(cat, names="categoria", values="receita")
+    st.plotly_chart(fig1)
 
-df_model = df.groupby("data")["receita"].sum().reset_index()
-df_model["dia"] = np.arange(len(df_model))
+    # pizza produto
+    prod = df.groupby("produto")["receita"].sum().reset_index()
+    fig2 = px.pie(prod, names="produto", values="receita")
+    st.plotly_chart(fig2)
 
-X = df_model[["dia"]]
-y = df_model["receita"]
+    # previsão
+    df_ml = df.groupby("data")["receita"].sum().reset_index()
+    df_ml["x"] = np.arange(len(df_ml))
 
-model = LinearRegression()
-model.fit(X, y)
+    model = LinearRegression()
+    model.fit(df_ml[["x"]], df_ml["receita"])
 
-# prever próximos 30 dias
-future_days = np.arange(len(df_model), len(df_model) + 30).reshape(-1, 1)
-future_pred = model.predict(future_days)
+    future = np.arange(len(df_ml), len(df_ml)+30).reshape(-1,1)
+    pred = model.predict(future)
 
-df_future = pd.DataFrame({
-    "dia": future_days.flatten(),
-    "previsao": future_pred
-})
+    st.line_chart(df_ml.set_index("data")["receita"])
 
-fig_pred = px.line()
+elif menu == "Dashboard Financeiro":
 
-fig_pred.add_scatter(
-    x=df_model["dia"],
-    y=df_model["receita"],
-    mode="lines",
-    name="Histórico"
-)
+    st.title("💰 Financeiro")
 
-fig_pred.add_scatter(
-    x=df_future["dia"],
-    y=df_future["previsao"],
-    mode="lines",
-    name="Previsão"
-)
+    df = pd.DataFrame({
+        "mes": ["Jan","Fev","Mar","Abr"],
+        "receita": [5000,7000,9000,11000],
+        "despesa": [3000,4000,5000,6000]
+    })
 
-st.plotly_chart(fig_pred, use_container_width=True)
+    df["lucro"] = df["receita"] - df["despesa"]
 
-# =========================
-# INSIGHTS AUTOMÁTICOS
-# =========================
-st.subheader("🧠 Insights Automáticos")
-
-top_prod = df_prod.sort_values("receita", ascending=False).iloc[0]
-top_cat = df_cat.sort_values("receita", ascending=False).iloc[0]
-
-st.success(f"""
-📌 Produto mais forte: {top_prod['produto']}  
-📌 Categoria dominante: {top_cat['categoria']}  
-💰 Maior impacto vem da categoria com maior receita.
-""")
-
-st.info("Modelo de previsão simples baseado em regressão linear (baseline).")
+    st.bar_chart(df.set_index("mes")[["receita","despesa"]])
+    st.line_chart(df.set_index("mes")["lucro"])
