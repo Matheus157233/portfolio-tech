@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 import hashlib
 from supabase import create_client
 
-SUPABASE_URL = "sb_secret_-p8c9Tump6H-6CtLE3YgAA_uOhpBhpT"
+SUPABASE_URL = "https://qzegvxfsyxklezbxhxbt.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF6ZWd2eGZzeXhrbGV6YnhoeGJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjQxNTE1OCwiZXhwIjoyMDk3OTkxMTU4fQ.jIHrymCIumRyJvY7FPiby5Dd5h3MCDRTbNF7oY_2Zdo"
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
