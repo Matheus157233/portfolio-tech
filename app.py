@@ -7,7 +7,7 @@ import hashlib
 
 menu = st.sidebar.radio(
     "📂 Navegação",
-    ["sobre mim", "Projetos",]
+    ["sobre mim", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
 if menu == "sobre mim":
@@ -79,7 +79,7 @@ Essas formações foram aplicadas diretamente em projetos práticos, incluindo d
 """)
 
 
-elif menu == "Projetos":
+elif menu == "Data Byte":
     st.title("🧠 Data Byte")
     st.write("Plataforma educacional de dados")
     st.markdown("""
@@ -171,7 +171,11 @@ O Data Byte representa a união entre educação e tecnologia, demonstrando como
 Além de servir como plataforma educacional, o projeto evidencia competências em desenvolvimento de software, análise de dados e construção de dashboards interativos.
 """)
 
-st.title("📊 Sales Dashboard")
+elif menu == "Dashboard de Vendas":
+
+    st.title("📊 Sales Dashboard")
+
+    np.random.seed(42)
 
     df = pd.DataFrame({
         "data": pd.date_range("2025-01-01", periods=200),
@@ -207,6 +211,8 @@ st.title("📊 Sales Dashboard")
 
     st.line_chart(df_ml.set_index("data")["receita"])
 
+elif menu == "Dashboard Financeiro":
+
     st.title("💰 Financeiro")
 
     df = pd.DataFrame({
@@ -219,5 +225,3 @@ st.title("📊 Sales Dashboard")
 
     st.bar_chart(df.set_index("mes")[["receita","despesa"]])
     st.line_chart(df.set_index("mes")["lucro"])
-
-
