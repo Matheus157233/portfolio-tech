@@ -173,8 +173,6 @@ Além de servir como plataforma educacional, o projeto evidencia competências e
 
 st.title("📊 Sales Dashboard")
 
-    np.random.seed(42)
-
     df = pd.DataFrame({
         "data": pd.date_range("2025-01-01", periods=200),
         "produto": np.random.choice(["Notebook", "Mouse", "Teclado"], 200),
