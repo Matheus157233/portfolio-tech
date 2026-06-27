@@ -10,8 +10,6 @@ menu = st.sidebar.radio(
     ["sobre mim", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
-logout()
-
 if menu == "sobre mim":
     st.title("Portifólio")
     st.write("Matheus Saraiva")
