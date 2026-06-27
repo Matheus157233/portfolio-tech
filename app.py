@@ -171,9 +171,7 @@ O Data Byte representa a união entre educação e tecnologia, demonstrando como
 Além de servir como plataforma educacional, o projeto evidencia competências em desenvolvimento de software, análise de dados e construção de dashboards interativos.
 """)
 
-elif menu == "Projetos":
-
-    st.title("📊 Sales Dashboard")
+st.title("📊 Sales Dashboard")
 
     np.random.seed(42)
 
@@ -211,8 +209,6 @@ elif menu == "Projetos":
 
     st.line_chart(df_ml.set_index("data")["receita"])
 
-elif menu == "Projetos":
-
     st.title("💰 Financeiro")
 
     df = pd.DataFrame({
@@ -225,3 +221,5 @@ elif menu == "Projetos":
 
     st.bar_chart(df.set_index("mes")[["receita","despesa"]])
     st.line_chart(df.set_index("mes")["lucro"])
+
+
