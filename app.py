@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 import hashlib
 
 menu = st.sidebar.radio(
-    "📂 Navegação",
+    "📂 um pouco sobre mim e alguns projetos criados",
     ["sobre mim", "Data Byte", "Dashboard de Vendas", "Dashboard Financeiro"]
 )
 
