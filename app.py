@@ -17,8 +17,6 @@ if menu == "sobre mim":
 
 # 👋 Sobre Mim
 
-    st.image("file:///C:/Users/Saraiva/Downloads/WhatsApp%20Image%202026-06-25%20at%2020.27.30.jpeg", width=100)
-
 Olá! Meu nome é **Matheus Saraiva** e sou estudante da área de tecnologia, com foco em **Ciência de Dados, Análise de Dados e Desenvolvimento de Soluções Digitais**.
 
 Atualmente curso o Técnico em Ciência de Dados no Senac Nações Unidas, onde desenvolvo projetos voltados para análise, visualização e interpretação de dados, utilizando ferramentas modernas do mercado.
